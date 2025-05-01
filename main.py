@@ -1,8 +1,16 @@
 from fastapi import FastAPI, File, UploadFile
 import whisper
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # of vervang "*" met bv. ["https://vapi.ai"] voor meer veiligheid
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 model = whisper.load_model("base")
 
 @app.post("/transcribe")
